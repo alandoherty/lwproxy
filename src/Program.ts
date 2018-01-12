@@ -28,11 +28,13 @@ const proxyConfigs = proxyConfig.configs || [];
 
 for(var i = 0; i < proxyConfigs.length; i++) {
     var cfg = proxyConfigs[i];
+    var srcPort = cfg.port ? parseInt(cfg.port) : parseInt(cfg.srcPort);
+    var targetPort = cfg.port ? parseInt(cfg.port) : parseInt(cfg.targetPort);
 
     if (cfg.type === "tcp")
-        proxy.addTcpProvider(parseInt(cfg.port), parseInt(cfg.port));
+        proxy.addTcpProvider(srcPort, targetPort);
     else if (cfg.type === "udp")
-        proxy.addUdpProvider(parseInt(cfg.port), parseInt(cfg.port));
+        proxy.addUdpProvider(srcPort, targetPort);
     else
         console.error("invalid provider type: " + cfg.type);
 }

@@ -1,0 +1,15 @@
+{
+  "src" : "127.0.0.1",
+  "target" : "google.co.uk",
+  "configs" : [
+    {
+      "type" : "tcp",
+      "port" : 3000
+    },
+    {
+      "type" : "tcp",
+      "srcPort" : "3001",
+      "targetPort" : "80"
+    }
+  ]
+}
