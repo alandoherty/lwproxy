@@ -1,9 +1,12 @@
 import {IProxyProvider} from "./NetProxy";
 import {EventEmitter} from "events";
-import {Socket, Server} from "net";
+import {Socket} from "net";
 
 const net = require("net");
 
+/**
+ * Provides TCP stream proxying.
+ */
 export class TcpProxy implements IProxyProvider {
     private _srcPort: number;
     private _srcHost: string;
@@ -88,6 +91,7 @@ class TcpProxyConnection extends EventEmitter {
      */
     close() {
         this._localSocket.end();
+        this._remoteSocket.end();
     }
 
     constructor(localSocket: Socket, proxy: TcpProxy) {
