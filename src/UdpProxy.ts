@@ -78,6 +78,7 @@ export class UdpProxy implements IProxyProvider {
     constructor(srcHost: string, srcPort: number, targetHost: string, targetPort: number) {
         const proxy = this;
 
+        this._connections = {};
         this._srcHost = srcHost;
         this._srcPort = srcPort;
         this._targetHost = targetHost;
