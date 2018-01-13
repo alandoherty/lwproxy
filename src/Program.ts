@@ -5,8 +5,22 @@ const net = require("net"),
 import {NetProxy} from "./NetProxy";
 declare var process;
 
+// setup command line options
+const commander = require("commander");
+
+commander.version("0.1.0")
+    .option("-c, --config <path>", "The configuration file path")
+    .option("-l, --log", "Enable verbose logging")
+    .name("lwproxy")
+    .parse(process.argv);
+
+let cfgPath: string = "./lwproxy.json";
+
+if (commander.config)
+    cfgPath = commander.config;
+
 // check configuration file exists
-if (!fs.existsSync("./lwproxy.json")) {
+if (!fs.existsSync(cfgPath)) {
     console.error("[lwproxy] no proxy configuration found");
     process.exit(1);
 }
@@ -31,12 +45,15 @@ for(var i = 0; i < proxyConfigs.length; i++) {
     var srcPort = cfg.port ? parseInt(cfg.port) : parseInt(cfg.srcPort);
     var targetPort = cfg.port ? parseInt(cfg.port) : parseInt(cfg.targetPort);
 
-    if (cfg.type === "tcp")
+    if (cfg.type === "tcp") {
         proxy.addTcpProvider(srcPort, targetPort);
-    else if (cfg.type === "udp")
+        console.log("[lwproxy] added tcp proxy " + srcPort + " -> " + targetPort);
+    } else if (cfg.type === "udp") {
         proxy.addUdpProvider(srcPort, targetPort);
-    else
-        console.error("invalid provider type: " + cfg.type);
+        console.log("[lwproxy] added udp proxy " + srcPort + " -> " + targetPort);
+    } else {
+        console.error("[lwproxy] invalid provider type: " + cfg.type);
+    }
 }
 
 // start

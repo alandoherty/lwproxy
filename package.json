@@ -1,7 +1,9 @@
 {
   "name": "lwproxy",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^2.13.0"
+  },
   "devDependencies": {
     "@types/node": "^9.3.0"
   }
